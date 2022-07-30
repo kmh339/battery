@@ -1,3 +1,4 @@
+import 'package:batterylevel/battery.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -7,11 +8,10 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'GetBattery',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -27,9 +27,27 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with Battery {
+  String currentBattery = 'Current Battery';
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(currentBattery),
+            ElevatedButton(
+              onPressed: () async {
+                currentBattery = await getBatteryLevel();
+                setState(() {});
+              },
+              child: Text('현재 배터리'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
